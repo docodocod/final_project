@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.admin_navi_wrap li a:link {
+	color: black;
+}
+
+.admin_navi_wrap li a:visited {
+	color: black;
+}
+
+.admin_navi_wrap li a:active {
+	color: black;
+}
+
+.admin_navi_wrap li a:hover {
+	color: black;
+}
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mybatis 공통 환경 설정 -->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- <settings>기본값 설정</settings> -->
+	<typeAliases>
+		<!-- <typeAlias alias="Member" type="com.board.icia.bean.Member" /> -->
+		<typeAlias alias="Member" type="com.project.omca.bean.Member"/>
+		<!-- <package name="com.board.icia.bean"/> -->
+	</typeAliases>
+	<!--  <typeHandlers></typeHandlers> -->
+</configuration>

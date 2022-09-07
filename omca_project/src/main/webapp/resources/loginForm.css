@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+/* 화면 전체 렙 */
+.wrapper {
+	width: 100%;
+}
+/* content 랩 */
+.wrap {
+	width: 100%;
+	margin: auto;
+}
+/* 홈페이지 기능 네비 */
+.top_gnb_area {
+	width: 100%;
+	height: 50px;
+	background-color: #a2a2ea;
+}
+/* 로고, 검색, 로그인 */
+.top_area {
+	width: 100%;
+	height: 100px;
+	/* background-color: #f7f0b9; */
+}
+/* 로고 영역 */
+.logo_area {
+	width: 20%;
+	height: 100%;
+	float: left;
+}
+
+.logo_area img {
+	width: 100%;
+	height: 100%;
+}
+/* 검색 박스 영역 */
+.search_area {
+	width: 60%;
+	height: 100%;
+	background-color: yellow;
+	float: left;
+}
+/* 로그인 버튼 영역 */
+.login_area {
+	width: 20%;
+	height: 100%;
+	display: inline-block;
+	text-align: center;
+}
+
+.login_button {
+	
+}
+
+.login_area>span {
+	
+}
+
+.login_button {
+	height: 50%;
+	margin-top: 30px;
+}
+
+/* 로그인 실패시 경고글 */
+.login_warn {
+	margin-top: 30px;
+	text-align: center;
+	color: red;
+}
+/* 로그인 성공 영역 */
+.login_success_area {
+	height: 62%;
+	width: 80%;
+	border: 2px solid #7474ad;
+	border-radius: 15px;
+	margin: 5% auto;
+	padding-top: 5%;
+}
+
+.login_success_area>span {
+	display: block;
+	text-align: left;
+	margin-left: 10%;
+}
