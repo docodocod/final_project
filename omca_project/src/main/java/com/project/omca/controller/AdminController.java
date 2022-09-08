@@ -67,9 +67,7 @@ public class AdminController {
 		/*
 		 * model.addAttribute("pageMaker", new PageDTO(cri, am.productGetTotal(cri)));
 		 */
-
 	}
-
 	// 포인트 상품 등록
 	@RequestMapping(value = "/Enroll", method = RequestMethod.GET)
 	public String productEnrolwlPost(HttpServletRequest request, Product pr, RedirectAttributes rttr) {
@@ -83,9 +81,7 @@ public class AdminController {
 		rttr.addFlashAttribute("enroll_result", pr.getP_name()); // 등록 성공 메시지 상품이름
 
 		return "/admin/main";
-
 	}
-
 	// 포인트 상품 삭제
 	@PostMapping("/productDelete")
 	public String productDeletePOST(int p_id, RedirectAttributes rttr) {
@@ -131,9 +127,7 @@ public class AdminController {
 
 				List<AttachImage> list = null;
 				return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
-
 			}
-
 		}
 		// 업로드 경로 초기화
 		String uploadFolder = "C:\\upload";
@@ -207,16 +201,13 @@ public class AdminController {
 		ResponseEntity<List<AttachImage>> result = new ResponseEntity<List<AttachImage>>(list, HttpStatus.OK);
 		return result;
 	}
-
 	@RequestMapping(value="/display", method=RequestMethod.GET)
 	public ResponseEntity<byte[]> getImage(String fileName) {
 		File file = new File("c:\\upload\\" + fileName);
 
 		ResponseEntity<byte[]> result = null;
 		
-
 		try {
-
 			HttpHeaders header = new HttpHeaders();
 
 			header.add("Content-type", Files.probeContentType(file.toPath()));
@@ -226,8 +217,6 @@ public class AdminController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return result;
-
 	}
 }
