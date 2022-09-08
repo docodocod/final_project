@@ -1,6 +1,5 @@
 package com.project.omca.controller;
 
-import java.util.HashMap;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -17,12 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.omca.bean.Member;
-import com.project.omca.service.*;
+import com.project.omca.service.MemberMM;
 
 /**
  * Handles requests for the application home page.
@@ -83,7 +81,7 @@ public class MemberController {
 
 				lvo.setM_password(""); // 인코딩된 비밀번호 정보 지움
 				session.setAttribute("mb", lvo); // session에 사용자의 정보 저장
-				return "main"; // 메인페이지 이동
+				return "redirect:/"; // 메인페이지 이동
 			} else {
 				rttr.addFlashAttribute("result", 0);
 				return "/member/loginForm"; // 로그인 페이지로 이동
@@ -171,7 +169,7 @@ public class MemberController {
 
 		session.invalidate();
 
-		return "main";
+		return "redirect:/";
 	}
 
 	/* 비동기방식 로그아웃 메서드 */
