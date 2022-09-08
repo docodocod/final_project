@@ -1,5 +1,7 @@
 package com.project.omca.controller;
 
+import java.io.File;
+import java.net.URLDecoder;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -9,11 +11,14 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -294,6 +299,32 @@ public class MemberController {
 		mm.memberPwUpdate(imb);
 
 		return "main";
+	}
+	/* 이미지 파일 삭제 */
+	@PostMapping("/deleteFile")
+	public ResponseEntity<String> deleteFile(String fileName){
+		
+		logger.info("deleteFile........" + fileName);
+		File file = null;
+		try {
+			/* 썸네일 파일 삭제 */
+			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
+			
+			file.delete();
+			
+			/* 원본 파일 삭제 */
+			String originFileName = file.getAbsolutePath().replace("s_", "");
+			
+			logger.info("originFileName : " + originFileName);
+			
+			file = new File(originFileName);
+			
+			file.delete();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("fail", HttpStatus.NOT_IMPLEMENTED);
+		}
+		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 }
 
