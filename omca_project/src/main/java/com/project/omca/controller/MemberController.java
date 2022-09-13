@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.omca.bean.Member;
-import com.project.omca.service.MemberMM;
+import com.project.omca.service.MemberService;
 
 /**
  * Handles requests for the application home page.
@@ -37,7 +37,7 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	@Autowired
-	private MemberMM mm;
+	private MemberService memberService;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -45,6 +45,7 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
 
+	
 	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
 	public void loginGET() {
 		logger.info("로그인 페이지 이동");
@@ -75,7 +76,7 @@ public class MemberController {
 		String rawPw = "";
 		String encodePw = "";
 
-		Member lvo = mm.memberLogin(mb); // 제출한아이디와 일치하는 아이디 있는지
+		Member lvo = memberService.memberLogin(mb); // 제출한아이디와 일치하는 아이디 있는지
 
 		if (lvo != null) { // 일치하는 아이디 존재시
 
@@ -118,7 +119,7 @@ public class MemberController {
 		mb.setM_password(encodePw); // 인코딩된 비밀번호 member객체에 다시 저장
 
 		// 회원가입 서비스 실행
-		mm.memberJoin(mb);
+		memberService.memberJoin(mb);
 
 		logger.info("회원가입 완료");
 
@@ -132,7 +133,7 @@ public class MemberController {
 
 		logger.info("아이디 확인 진입");
 
-		int result = mm.idCheck(m_id);
+		int result = memberService.idCheck(m_id);
 
 		logger.info("결과값 = " + result);
 
@@ -150,7 +151,7 @@ public class MemberController {
 
 		logger.info("이메일 확인 진입");
 
-		int result = mm.mailCheck(m_email);
+		int result = memberService.mailCheck(m_email);
 
 		logger.info("결과값 = " + result);
 
@@ -178,7 +179,7 @@ public class MemberController {
 	}
 
 	/* 비동기방식 로그아웃 메서드 */
-	@RequestMapping(value = "logout.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/logout.do", method = RequestMethod.POST)
 	@ResponseBody
 	public void logoutPOST(HttpServletRequest request) throws Exception {
 
@@ -267,7 +268,7 @@ public class MemberController {
 	@RequestMapping(value = "/idSearchForm", method = RequestMethod.POST)
 	public String idSearchGET(Member mb, Model model) {
 		logger.info("아이디 찾기 메소드 진입");
-		Member member = mm.memberIdSearch(mb);
+		Member member = memberService.memberIdSearch(mb);
 		if (member == null) {
 			model.addAttribute("check", 1);
 		} else {
@@ -281,7 +282,7 @@ public class MemberController {
 	// 비밀번호 찾기 실행
 	@RequestMapping(value = "/pwSearchForm", method = RequestMethod.POST)
 	public String pwSearchGET(Member mb, Model model) {
-		Member member = mm.memberPwSearch(mb);
+		Member member = memberService.memberPwSearch(mb);
 		if (member == null) {
 			model.addAttribute("check", 1);
 		} else {
@@ -296,7 +297,7 @@ public class MemberController {
 	public String pwUpdateGET(Member mb, String m_password) {
 		logger.info("비밀반호 변경 페이지 진입");
 		String imb = mb.getM_password();
-		mm.memberPwUpdate(imb);
+		memberService.memberPwUpdate(imb);
 
 		return "main";
 	}

@@ -3,26 +3,68 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.omca.dao.AdminDao">
+
+	<!-- 상품 등록 -->
 	<insert id="productEnroll">
+		<selectKey resultType="int" keyProperty="p_id" order="AFTER">
+			SELECT
+			ISEQ$$_95791.currval from dual
+		</selectKey>
 		insert into product
 		values(default,default,#{p_name},#{p_img},#{p_price},#{p_count},default,default)
 	</insert>
 
-	<!-- 상품 목록 조회 -->
-	<select id="productGetList" resultType="com.project.omca.bean.Product">
-      
-     	select * from product
-      </select>
-      
-    <!-- 상품 상세 조회 -->
-    <select id="productGetPage" resultType="com.project.omca.bean.Product">
-    	select * from product where p_id=#{p_id}
-    </select>
-    
-    <!-- 상품 정보 삭제 -->
+      <!-- 상품 리스트 -->
+  	<select id="productGetList" resultType="com.project.omca.bean.Product">
+  	
+	  	<![CDATA[
+		select * from(
+		    select /*+INDEX_DESC(product SYS_C0032443)*/ rownum as rn, p_name,p_price,p_count
+		    from product
+		    where 
+		]]>    
+		
+		    <if test="keyword != null">
+		    
+			    p_name like '%' || #{keyword} || '%' and
+			    
+		    </if>
+		<![CDATA[    
+		     rownum <= #{pageNum}*#{amount}
+            )
+        where rn > (#{pageNum} - 1) * #{amount}	  	
+  		]]>
+  	</select>
+  	
+  	<!-- 상품 총 개수 -->
+  	<select id="productGetTotal" resultType="int">
+  	
+  		select count(*) from product
+  		
+  		<if test="keyword != null">
+  			where p_name like '%' || #{keyword} || '%'
+  		</if>
+  		
+  	</select> 
+
+	<!-- 상품 상세 조회 -->
+	<select id="productGetPage" resultType="com.project.omca.bean.Product">
+		select * from product where p_id= #{p_id}
+	</select>
+
+	<!-- 상품 정보 삭제 -->
 	<delete id="productDelete">
-	
 		delete from product where p_id = #{p_id}
-	
 	</delete>
+
+	<!-- 이미지 등록 -->
+	<insert id="imageEnroll">
+		insert into product_image(p_id, fileName, uploadPath,
+		uuid) values (#{p_id}, #{fileName}, #{uploadPath}, #{uuid})
+	</insert>
+	
+	<!-- 회원 관리 -->
+	<select id="memberList" resultType="com.project.omca.bean.Member">
+		select * from member
+	</select>
 </mapper>

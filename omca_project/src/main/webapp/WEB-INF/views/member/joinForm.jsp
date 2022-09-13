@@ -86,7 +86,7 @@
 
 		$.ajax({
 			type : "post",
-			url : "memberIdChk",
+			url : "/member/memberIdChk",
 			data : data,
 			success : function(result) {
 				// console.log("성공 여부" + result);
@@ -111,7 +111,7 @@
 
 		$.ajax({
 			type : "post",
-			url : "memberMailChk",
+			url : "/member/memberMailChk",
 			data : data,
 			success : function(result) {
 				// console.log("성공 여부" + result);
@@ -149,7 +149,7 @@
 
 		$.ajax({
 			type : "GET",
-			url : "mailCheck?email=" + email,
+			url : "/member/mailCheck?email=" + email,
 			success : function(data) {
 
 				//console.log("data : " + data);

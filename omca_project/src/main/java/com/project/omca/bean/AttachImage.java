@@ -13,6 +13,6 @@ public class AttachImage {
 	/* 파일 이름 */
 	private String fileName;
 	
-	/* 상품 id */
 	private int p_id;
+	
 }

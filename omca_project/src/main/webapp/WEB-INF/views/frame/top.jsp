@@ -17,7 +17,7 @@
 		</c:if>
 		<c:if test="${mb != null}">
 			<c:if test="${mb.m_admin==1}">
-				<li><a id="admin_page">관리자 페이지</a></li>
+				<li><a id="admin_page" href="/admin/main">관리자 페이지</a></li>
 			</c:if>
 			<li><a id="gnb_logout_button">로그아웃</a></li>
 			<li><a href="/member/">마이페이지</a></li>
@@ -36,19 +36,6 @@
 				document.location.reload();
 			}
 		}) // ajax 
-	})
-	$("#admin_page").click(function() {
-		$.ajax({
-			url : "/admin/main",
-			async : true,
-			type : "GET",
-			dataType : "html",
-			success : function(data) {
-				$('.content_area').children().remove();
-				// Contents 영역 교체
-				$('.content_area').html(data);
-			}
-		})
 	})
 </script>
 </html>

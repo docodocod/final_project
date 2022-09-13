@@ -10,7 +10,7 @@ import com.project.omca.bean.Member;
 import com.project.omca.dao.MemberDao;
 
 @Service
-public class MemberMM {
+public class MemberService {
 
 	@Autowired
 	private MemberDao mDao;
@@ -33,6 +33,7 @@ public class MemberMM {
 	public int mailCheck(String m_email) {
 		return mDao.mailCheck(m_email);
 	}
+	
 	public Member memberIdSearch(Member mb) {
 		return mDao.memberIdSearch(mb);
 	}

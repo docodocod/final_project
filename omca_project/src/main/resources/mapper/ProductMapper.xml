@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="/resource/mapper/ProductMapper">
+	<!-- criteria(검색조건) -->
+	<sql id="criteria">
+		    <if test="keyword != null">
+			    p_name like '%' || #{keyword} || '%' and
+			</if>
+	</sql>
+	<!-- 상품 검색 -->
+	<select id="getProductsList" resultType="com.project.omca.bean.Product">
+	
+		<![CDATA[
+          select * from (
+              select /*+INDEX_DESC(product pk_p_id) */ 
+                  rownum rn, p_id, p_name, p_price, p_count
+            from product
+            where
+             
+	    <include refid="criteria"></include>
+	    
+	    <![CDATA[
+	    		        
+		        rownum <= #{pageNum} * #{amount} 
+	        	)
+	        where rn > (#{pageNum} -1) * #{amount}
+		]]>	  		
+	
+	</select>
+	
+	<!-- 상품 총 개수 -->
+	<select id="goodsGetTotal" resultType="int">
+	
+		select count(*) from vam_book
+		where
+		<include refid="criteria"></include> 
+		bookId >0
+		
+	</select>
+	
+  </mapper>

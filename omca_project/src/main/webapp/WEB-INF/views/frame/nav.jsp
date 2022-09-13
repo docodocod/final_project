@@ -48,7 +48,7 @@
 	
 	$("#point_shop").click(function(){
 		$.ajax({
-			url : "/admin/main",
+			url : "/product/main",
 			async : true,
 			type : "GET",
 			dataType : "html",

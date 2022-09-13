@@ -1,7 +1,10 @@
 package com.project.omca.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.project.omca.bean.Member;
 
+@Repository
 public interface MemberDao {
 	// 회원가입
 	public void memberJoin(Member mb);
