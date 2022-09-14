@@ -23,8 +23,8 @@ import com.project.omca.bean.AttachImage;
 import com.project.omca.bean.Product;
 import com.project.omca.model.Criteria;
 import com.project.omca.model.PageDTO;
-import com.project.omca.service.AttachService;
-import com.project.omca.service.ProductService;
+import com.project.omca.service.AttachAM;
+import com.project.omca.service.ProductPM;
 
 @Controller
 @RequestMapping(value="/product")
@@ -33,14 +33,14 @@ public class ProductController {
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
-	private ProductService productService;
+	private ProductPM productService;
 	
 	@Autowired
-	private AttachService attachService;
+	private AttachAM attachService;
 	
 	/* 상품 검색 */
 	@GetMapping("/search")
-	public String searchGoodsGET(Criteria cri, Model model) {
+	public String searchProductGET(Criteria cri, Model model) {
 		
 		logger.info("cri : " + cri);
 		
@@ -52,13 +52,12 @@ public class ProductController {
 		} else {
 			model.addAttribute("listcheck", "empty");
 			
-			return "/product/search";
+			return "/product/productManage";
 		}
 		
 		model.addAttribute("pageMaker", new PageDTO(cri, productService.productGetTotal(cri)));
 		
-		
-		return "/product/search";
+		return "/product/productManage";
 		
 	}
 	// 상품 이미지 호출
@@ -94,4 +93,5 @@ public class ProductController {
 		public void pointShopGET() {
 			logger.info("포인트 샵 이동");
 		}
+		
 }

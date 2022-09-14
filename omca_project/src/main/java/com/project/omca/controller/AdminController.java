@@ -2,7 +2,6 @@ package com.project.omca.controller;
 
 import java.awt.Graphics2D;
 
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -40,8 +39,8 @@ import com.project.omca.bean.Member;
 import com.project.omca.bean.Product;
 import com.project.omca.model.Criteria;
 import com.project.omca.model.PageDTO;
-import com.project.omca.service.AdminService;
-import com.project.omca.service.AttachService;
+import com.project.omca.service.AdminAM;
+import com.project.omca.service.AttachAM;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -50,8 +49,7 @@ public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 	@Autowired
-	private AdminService adminService;
-	
+	private AdminAM adminService;
 
 	// 관리자 페이지 이동
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
@@ -64,7 +62,6 @@ public class AdminController {
 	public void ProductEnrollGet() {
 		logger.info("상품 등록 페이지 이동");
 	}
-
 
 	// 포인트 상품 등록
 	@RequestMapping(value = "/Enroll", method = RequestMethod.GET)
@@ -89,7 +86,7 @@ public class AdminController {
 
 		/* 상품 리스트 데이터 */
 		List<Product> list = adminService.productGetList(cri);
-		if(list.size()!=0) {
+		if (list.size() != 0) {
 			model.addAttribute("list", list);
 		} else {
 			model.addAttribute("listCheck", "empty");
@@ -103,11 +100,11 @@ public class AdminController {
 		PageDTO pageMaker = new PageDTO(cri, total);
 
 		model.addAttribute("pageMaker", pageMaker);
-		
+
 		logger.info("총 상품 페이지 마커 성공");
-		
+
 		return "/admin/productManage";
-		
+
 	}
 
 	// 포인트 상품 삭제
@@ -115,7 +112,7 @@ public class AdminController {
 	public String productDeletePOST(int p_id, RedirectAttributes rttr) {
 
 		logger.info("상품 삭제 진입");
-		
+
 		int result = adminService.productDelete(p_id);
 
 		logger.info("상품 삭제 성공");
@@ -124,21 +121,22 @@ public class AdminController {
 
 		return "redirect:/admin/main";
 	}
-	
-	//회원 관리
-	@RequestMapping(value="/memberList", method=RequestMethod.GET)
-	public void memberListGET (Model model) {
+
+	// 회원 관리
+	@RequestMapping(value = "/memberList", method = RequestMethod.GET)
+	public void memberListGET(Model model) {
 		logger.info("회원 관리 진입");
-		
-		List<Member> mList=adminService.memberList();
-		
+
+		List<Member> mList = adminService.memberList();
+
 		model.addAttribute("mb", mList);
 	}
-	
+
 	/* 첨부 파일 업로드 */
 	@RequestMapping(value = "/uploadAjaxAction", method = RequestMethod.POST)
 	public ResponseEntity<List<AttachImage>> uploadAjaxActionPOST(MultipartFile[] p_img) {
 		logger.info("파일 업로드 진입");
+
 		/* 이미지 파일 체크 */
 		for (MultipartFile multipartFile : p_img) {
 			File checkfile = new File(multipartFile.getOriginalFilename());
@@ -164,9 +162,9 @@ public class AdminController {
 		Date date = new Date();
 		String str = sdf.format(date);
 		String datePath = str.replace("-", File.separator);
-
+		
 		/* 폴더 생성 */
-		File uploadPath = new File(uploadFolder, datePath);
+		File uploadPath = new File(uploadFolder);
 		if (uploadPath.exists() == false) {
 			uploadPath.mkdirs();
 		}
@@ -225,10 +223,6 @@ public class AdminController {
 		return result;
 	}
 
-	
-	
-	
-
 	@PostMapping("/deleteFile")
 	public ResponseEntity<String> deleteFile(String fileName) {
 
@@ -256,5 +250,25 @@ public class AdminController {
 			return new ResponseEntity<String>("fail", HttpStatus.NOT_IMPLEMENTED);
 		}
 		return new ResponseEntity<String>("success", HttpStatus.OK);
-	}	
+	}
+
+	// 상품 이미지 호출
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getImage(String fileName) {
+		File file = new File("c:\\upload\\" + fileName);
+
+		ResponseEntity<byte[]> result = null;
+
+		try {
+			HttpHeaders header = new HttpHeaders();
+
+			header.add("Content-type", Files.probeContentType(file.toPath()));
+
+			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

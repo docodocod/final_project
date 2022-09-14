@@ -121,62 +121,18 @@
 		searchForm.submit();
 
 	});
-	let p_id = "147";
-	let uploadReslut = $("#uploadReslut");
-	$
-			.getJSON(
-					"/product/getAttachList",
-					{
-						p_id : p_id
-					},
-					function(arr) {
-						let str = "";
-						let obj = arr[0];
 
-						let fileCallPath = encodeURIComponent(obj.uploadPath
-								+ "/s_"
-								+ obj.uuid
-								+ "_"
-								+ obj.fileName);
-						str += "<div id='result_card'";
-str += "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "'";
-str += ">";
-						str += "<img src='/product/display?fileName="
-								+ fileCallPath + "'>";
-						str += "</div>";
-						uploadReslut.html(str);
-					})
+	$(document).ready(function() {
+			/* 이미지 삽입 */
+	 $(".image_wrap").each(function(i, obj) {
 
-	$(document)
-			.ready(
-					function() {
-						/* 이미지 정보 호출 */
-						
-						/* 이미지 삽입 */
-						$(".image_wrap")
-								.each(
-										function(i, obj) {
-
-											const bobj = $(obj);
-
-											const uploadPath = bobj
-													.data("path");
-											const uuid = bobj.data("uuid");
-											const fileName = bobj
-													.data("filename");
-
-											const fileCallPath = encodeURIComponent(uploadPath
-													+ "/s_"
-													+ uuid
-													+ "_"
-													+ fileName);
-
-											$(this).find("img").attr(
-													'src',
-													'/product/display?fileName='
-															+ fileCallPath);
-
-										});
-					});
+		const bobj = $(obj);
+		const uploadPath = bobj.data("path");
+		const uuid = bobj.data("uuid");
+		const fileName = bobj.data("filename");
+		const fileCallPath = encodeURIComponent(uploadPath+ "/s_"+ uuid+ "_"+ fileName);
+		$(this).find("img").attr('src','/admin/display?fileName='+ fileCallPath);
+		});
+	});
 </script>
 </html>

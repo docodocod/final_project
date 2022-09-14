@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.omca.bean.Member;
-import com.project.omca.service.MemberService;
+import com.project.omca.service.MemberMM;
 
 /**
  * Handles requests for the application home page.
@@ -37,7 +37,7 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	@Autowired
-	private MemberService memberService;
+	private MemberMM memberService;
 
 	@Autowired
 	private JavaMailSender mailSender;

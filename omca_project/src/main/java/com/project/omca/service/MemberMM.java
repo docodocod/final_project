@@ -10,7 +10,7 @@ import com.project.omca.bean.Member;
 import com.project.omca.dao.MemberDao;
 
 @Service
-public class MemberService {
+public class MemberMM {
 
 	@Autowired
 	private MemberDao mDao;

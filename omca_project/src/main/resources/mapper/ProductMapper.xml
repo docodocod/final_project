@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="/resource/mapper/ProductMapper">
+  
 	<!-- criteria(검색조건) -->
 	<sql id="criteria">
 		    <if test="keyword != null">
@@ -14,7 +15,7 @@
 	
 		<![CDATA[
           select * from (
-              select /*+INDEX_DESC(product pk_p_id) */ 
+              select /*+INDEX_DESC(product SYS_C0032443) */ 
                   rownum rn, p_id, p_name, p_price, p_count
             from product
             where
@@ -31,13 +32,14 @@
 	</select>
 	
 	<!-- 상품 총 개수 -->
-	<select id="goodsGetTotal" resultType="int">
+	<select id="productGetTotal" resultType="int">
 	
-		select count(*) from vam_book
+		select count(*) from product
 		where
 		<include refid="criteria"></include> 
-		bookId >0
-		
+		p_id >0
 	</select>
+	
+	
 	
   </mapper>

@@ -12,7 +12,7 @@ import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
-public class AttachService {
+public class AttachAM {
 	
 	@Autowired
 	private AttachDao attDao;
